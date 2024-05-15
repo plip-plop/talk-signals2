@@ -17,7 +17,7 @@ export class ModelComponent {
   }
 
   /**
-   * DEMO :
+   * DEMO : ngModel/two-way data binding.
    * CONCEPT : Writable (voir Input).
    * Toujours en Preview !
    */

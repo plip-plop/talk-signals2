@@ -1,12 +1,19 @@
-<h1>AppComponent : </h1>
+<h1>AppComponent :</h1>
 <p>monSignal a pour valeur : {{ monSignal() }}</p>
 <p>monComputedSignal a pour valeur : {{ monComputedSignal() }}</p>
 
-<button mat-flat-button color="primary" (click)="updateSignal()">Incrémenter : ".update()"</button>
-<button mat-flat-button color="primary" (click)="setSignal()">Réinitialiser : ".set()"</button>
+<button mat-flat-button color="primary" (click)="updateSignal()">
+  Incrémenter : ".update()"
+</button>
+<button mat-flat-button color="primary" (click)="setSignal()">
+  Réinitialiser : ".set()"
+</button>
 
+<!-- 
 <app-input />
-<app-output (monOutputSignal)="emittedSignal($event)"/>
+<app-output (monOutputSignal)="emittedSignal($event)" />
 <app-model />
 <app-effect />
-<app-equality />
+<app-interop />
+<app-equality /> 
+-->

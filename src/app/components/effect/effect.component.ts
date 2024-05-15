@@ -1,4 +1,11 @@
-import { Component, EffectRef, Injector, effect, signal } from '@angular/core';
+import {
+  Component,
+  EffectRef,
+  Injector,
+  OnInit,
+  effect,
+  signal,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -7,24 +14,34 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [MatButtonModule],
   templateUrl: './effect.component.html',
 })
-export class EffectComponent {
+export class EffectComponent implements OnInit {
   monEffectSignal = signal(0);
-  effectRef ?: EffectRef;
+  effectRef?: EffectRef;
 
   constructor(private injector: Injector) {
     effect(() => {
-      console.log(`Ecoute iniitiale (constructor) : ${this.monEffectSignal()}`);
+      console.log(`Ecoute initiale (constructor) : ${this.monEffectSignal()}`);
     });
   }
 
+  ngOnInit() {
+    /**
+     * effect() can only be used within an injection context such as a constructor, a factory function,
+     * a field initializer, or a function used with `runInInjectionContext`
+     */
+  }
+
   handleUpdateSignal() {
-    this.monEffectSignal.update(value => value + 1);
+    this.monEffectSignal.update((value) => value + 1);
   }
 
   handleNewEffect() {
-    effect(() => {
-      console.log(`Nouvelle écoute : ${this.monEffectSignal()}`);
-    }, { injector: this.injector });
+    effect(
+      () => {
+        console.log(`Nouvelle écoute : ${this.monEffectSignal()}`);
+      },
+      { injector: this.injector }
+    );
   }
 
   handleDestroyEffect() {
@@ -33,6 +50,7 @@ export class EffectComponent {
 
   /**
    * DEMO :
+   * CONCEPT : Réaction aux changements.
    * Effect : Assignable à une property.
    * Déclenchable à tout moment : { injector: this.injector }
    * Destructible : Assigner effect à "this.effectRef = "

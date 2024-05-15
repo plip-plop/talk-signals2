@@ -1,4 +1,12 @@
-import { Component, InputSignal, input } from '@angular/core';
+import {
+  Component,
+  Input,
+  InputSignal,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  input,
+} from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -6,13 +14,19 @@ import { Component, InputSignal, input } from '@angular/core';
   imports: [],
   templateUrl: './input.component.html',
 })
-export class InputComponent {
-  monInputSignal: InputSignal<number | undefined> = input<number>();
-  autreInputSignal: InputSignal<number> = input(1);
+export class InputComponent implements OnInit, OnChanges {
+  @Input()
+  monInputSignal: any;
+
+  ngOnInit() {
+    // this.monInputSignal.set(12);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {}
 
   /**
    * DEMO :
-   * CONCEPT : Readonly (this.monInputSignal.set(1)), Suppression de "ngOnChanges"
+   * CONCEPT : "InputSignal<number>" = input<number>(), Readonly (this.monInputSignal.set()), Suppression de "ngOnChanges"
    * [monInputSignal]="100"
    * input.required<number>();
    * input(999, {alias: 'ageDuCaptaine'});

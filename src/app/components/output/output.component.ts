@@ -1,5 +1,11 @@
 import { MatButtonModule } from '@angular/material/button';
-import { Component, OutputEmitterRef, output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OutputEmitterRef,
+  output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-output',
@@ -8,9 +14,15 @@ import { Component, OutputEmitterRef, output } from '@angular/core';
   templateUrl: './output.component.html',
 })
 export class OutputComponent {
-  monOutputSignal : OutputEmitterRef<string>  = output<string>();
+  @Output()
+  monOutputSignal = new EventEmitter<string>();
 
   handleEmitSignal() {
     this.monOutputSignal.emit('Hello');
   }
+
+  /**
+   * DEMO :
+   * CONCEPT : OutputEmitterRef<string>  = output<string>()
+   */
 }
