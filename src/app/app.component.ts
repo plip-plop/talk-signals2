@@ -12,6 +12,7 @@ import { ModelComponent } from './components/model/model.component';
 import { EffectComponent } from './components/effect/effect.component';
 import { EqualityComponent } from './components/equality/equality.component';
 import { InteropComponent } from './components/interop/interop.component';
+import { EqualityArrayComponent } from './components/equality-array/equality-array.component';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ import { InteropComponent } from './components/interop/interop.component';
     EffectComponent,
     EqualityComponent,
     InteropComponent,
+    EqualityArrayComponent,
   ],
 })
 export class AppComponent {

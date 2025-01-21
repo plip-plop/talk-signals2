@@ -1,6 +1,10 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import _ from 'lodash';
+
+interface User {
+  id: number;
+  name: string;
+}
 
 @Component({
   selector: 'app-equality',
@@ -9,25 +13,29 @@ import _ from 'lodash';
   templateUrl: './equality.component.html',
 })
 export class EqualityComponent {
-  data = signal<string[]>([''], { equal: _.isEqual });
-  // data = signal<string[]>(['']);
+  /**
+   * Si on ne fournit pas une fonction "equal": L'objet/computed est réévalué à chaque "set()"
+   * Si on fournit une fonction "equal": L'objet/computed est évalué 1 fois (init).
+   */
+  currentUser = signal<User>({ id: 0, name: 'Bruce' });
+  // currentUser = signal<User>({ id: 0, name: 'Bruce' }, { equal: this.isEqual });
 
-  constructor() {
-    effect(() => {
-      console.log(`data a pour valeur: ${this.data()}`);
+  name = computed(() => {
+    console.log('computed()...');
+
+    const user = this.currentUser();
+
+    return user.name;
+  });
+
+  setObject() {
+    this.currentUser.set({
+      id: 0,
+      name: 'Bruce',
     });
   }
 
-  setHello() {
-    this.data.set(['Hello']);
+  isEqual(u1: User, u2: User): boolean {
+    return u1.id === u2.id && u1.name === u2.name;
   }
-
-  setWorld() {
-    this.data.set(['World']);
-  }
-
-  /**
-   * DEMO :
-   * Nécessite "Lodash"
-   */
 }
