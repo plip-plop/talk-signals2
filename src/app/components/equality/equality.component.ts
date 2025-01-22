@@ -1,4 +1,4 @@
-import { Component, computed, effect, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 interface User {
@@ -6,6 +6,10 @@ interface User {
   name: string;
 }
 
+/**
+ * Si on ne fournit pas une fonction "equal": L'objet/computed est réévalué à chaque "set()"
+ * Si on fournit une fonction "equal": L'objet/computed est évalué 1 fois (init).
+ */
 @Component({
   selector: 'app-equality',
   standalone: true,
@@ -13,10 +17,7 @@ interface User {
   templateUrl: './equality.component.html',
 })
 export class EqualityComponent {
-  /**
-   * Si on ne fournit pas une fonction "equal": L'objet/computed est réévalué à chaque "set()"
-   * Si on fournit une fonction "equal": L'objet/computed est évalué 1 fois (init).
-   */
+
   currentUser = signal<User>({ id: 0, name: 'Bruce' });
   // currentUser = signal<User>({ id: 0, name: 'Bruce' }, { equal: this.isEqual });
 

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * TODO.
+ */
 @Component({
   selector: 'app-equality-array',
   standalone: true,

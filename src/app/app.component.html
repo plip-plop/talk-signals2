@@ -2,17 +2,32 @@
 <p>monSignal a pour valeur : {{ monSignal() }}</p>
 <p>monComputedSignal a pour valeur : {{ monComputedSignal() }}</p>
 
-<button mat-flat-button color="primary" (click)="updateSignal()">
+<button mat-flat-button color="primary" (click)="incrementerSignal()">
   Incrémenter : ".update()"
 </button>
+
 <button mat-flat-button color="primary" (click)="setSignal()">
   Réinitialiser : ".set()"
 </button>
 
-<app-input />
+<!-- 1 (Input) -->
+<app-input [monInputSignal]="monSignal()" [myInputTransform]=""/>
+
+<!-- 2 (Output) -->
 <app-output (monOutputSignal)="emittedSignal($event)" />
-<app-model />
+
+<!-- 3 (Model = Input + Output) -->
+<div>
+  <app-model [(isChecked)]="boolSignal" (isCheckedChange)="handleChangeOfModel($event)"/>
+  <p>Le bouton suivant se situe dans le parent (son état dépend de la valeur émise par l'enfant):</p>
+  <button mat-flat-button color="{{boolSignal() ? 'primary' : 'warn'}}">{{ boolSignal() }}</button>
+</div>
+
+<!-- 4 (Effect) -->
 <app-effect />
+
+<!-- 5 (RxJS interoperability) -->
 <app-interop />
+
+<!-- 6 (Equality) -->
 <app-equality />
-<app-equality-array />

@@ -6,14 +6,25 @@ import {
   signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { InputComponent } from './components/input/input.component';
-import { OutputComponent } from './components/output/output.component';
-import { ModelComponent } from './components/model/model.component';
 import { EffectComponent } from './components/effect/effect.component';
 import { EqualityComponent } from './components/equality/equality.component';
+import { InputComponent } from './components/input/input.component';
 import { InteropComponent } from './components/interop/interop.component';
-import { EqualityArrayComponent } from './components/equality-array/equality-array.component';
+import { ModelComponent } from './components/model/model.component';
+import { OutputComponent } from './components/output/output.component';
 
+/**
+ * signal():
+ * Constructor. Doit avoir une valeur initiale (possiblement null/undefined).
+ * Renvoie un Signal est de type "WritableSignal".
+ * Il peut être modifié grâce à 2 méthodes: "set()" et "update()".
+ * 
+ * computed():
+ * Signal dérivé d'autres Signals.
+ * Renvoie un Signal est de type "Signal". Il ne peut pas être modifié.
+ * 
+ * Tous les Signals sont typables.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -26,31 +37,43 @@ import { EqualityArrayComponent } from './components/equality-array/equality-arr
     EffectComponent,
     EqualityComponent,
     InteropComponent,
-    EqualityArrayComponent,
   ],
 })
 export class AppComponent {
   monSignal: WritableSignal<number> = signal<number>(0);
-  monComputedSignal: Signal<string> = computed(() =>
-    this.monSignal() % 2 === 0 ? 'Hello' : 'World'
+  boolSignal: WritableSignal<boolean> = signal<boolean>(true);
+
+  monComputedSignal: Signal<number> = computed(() =>
+    this.monSignal() * 10
   );
 
   setSignal() {
     this.monSignal.set(0);
   }
 
-  updateSignal() {
+  incrementerSignal() {
     this.monSignal.update((value) => value + 1);
+    // Valide, mais moins élégant: this.monSignal.set(this.monSignal() + 1);
   }
 
   emittedSignal(value: string) {
-    console.log(`EmittedSignal = ${value}`);
+    console.log(`output() - Le parent reçoit comme valeur: ${value}`);
+  }
+
+  handleChangeOfModel(value: boolean) {
+    console.log(`model() - Le parent reçoit comme valeur: ${value}`);
+  }
+
+  computedCantChange() {
+    // this.monComputedSignal.set(0);
+    // this.monComputedSignal.update((value) => value + 1);
   }
 
   /**
-   * DEMO :
-   * CONCEPT : Init (WritableSignal VS Signal).
+   * CONCEPT :
+   * Init (WritableSignal VS Signal).
    * set()/update()/computed()
+   * 
    * 1 - Input.
    * 2 - Output.
    * 3 - Model.

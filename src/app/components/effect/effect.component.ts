@@ -8,6 +8,17 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
+/**
+ * effect()
+ * Fonction déclenchée à chaque changement de valeur du Signal.
+ * Utilisable seulement dans un contexte d'injection, ou avec "{ injector: this.injector }"
+ * Renvoie un "EffectRef".
+ * 
+ * effectRef?: EffectRef;
+ * Permet de déclencher la méthode "destroy()" pour cesser l'écoute.
+ * 
+ * A utiliser le moins possible.
+ */
 @Component({
   selector: 'app-effect',
   standalone: true,
@@ -18,7 +29,7 @@ export class EffectComponent implements OnInit {
   monEffectSignal = signal(0);
   effectRef?: EffectRef;
 
-  constructor(private injector: Injector) {
+  constructor(private readonly injector: Injector) {
     effect(() => {
       console.log(`Ecoute initiale (constructor) : ${this.monEffectSignal()}`);
     });
@@ -49,9 +60,7 @@ export class EffectComponent implements OnInit {
   }
 
   /**
-   * DEMO :
    * CONCEPT :
-   * Effect : Assignable à une property.
    * Déclenchable à tout moment : { injector: this.injector }
    * Destructible : Assigner effect à "this.effectRef = "
    */
