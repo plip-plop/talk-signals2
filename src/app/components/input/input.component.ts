@@ -4,14 +4,16 @@ import { Component, InputSignal, input } from '@angular/core';
  * input():
  * Equivalent à "@Input()".
  * Renvoie un Signal est de type "InputSignal". Il ne peut pas être modifié.
- * 
+ *
  * <monInput>.required<number>()
  * Rend l'alimentation de l'input obligatoire.
- * 
+ *
  * Possibilité de lui passer une fonction "transform".
- * Attention: Si une initialValue est fourni à "input()", elle ne sera pas transformée.
+ * Si le Parent n'alimente pas l'input (= property binding vide), l'enfant va se baser sur son initialValue.
+ * Si le parent alimente l'input avec null/undefined, l'enfant va se baser sur cette donnée.
+ * Attention: La fonction "transform" est appliquée aux valeurs alimentées par le parent, mais pas à l'initialValue de l'enfant.
  * Seules les valeurs fournies par le parent (via property binding "[]") le seront.
- * 
+ *
  * Possibilité de lui donner un alias.
  * Ex: input(999, {alias: 'ageDuCaptaine'});
  */
@@ -29,14 +31,14 @@ export class InputComponent {
       if (!value) {
         return 'Hello World';
       } else {
-        value += " :TRANSFORMED";
+        value += ' :TRANSFORMED';
         return value;
       }
-    }
+    },
   });
 
   /**
-   * CONCEPT : 
+   * CONCEPT :
    * "InputSignal<number>" = input<number>(), Readonly (this.monInputSignal.set()), Suppression de "ngOnChanges"
    * [monInputSignal]="100"
    * input.required<number>();

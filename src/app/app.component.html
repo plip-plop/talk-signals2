@@ -11,16 +11,28 @@
 </button>
 
 <!-- 1 (Input) -->
-<app-input [monInputSignal]="monSignal()" [myInputTransform]=""/>
+<app-input [monInputSignal]="monSignal()" [myInputTransform]="" />
 
 <!-- 2 (Output) -->
 <app-output (monOutputSignal)="emittedSignal($event)" />
 
 <!-- 3 (Model = Input + Output) -->
 <div>
-  <app-model [(isChecked)]="boolSignal" (isCheckedChange)="handleChangeOfModel($event)"/>
-  <p>Le bouton suivant se situe dans le parent (son état dépend de la valeur émise par l'enfant):</p>
-  <button mat-flat-button color="{{boolSignal() ? 'primary' : 'warn'}}">{{ boolSignal() }}</button>
+  <app-model
+    [(isChecked)]="boolSignal"
+    (isCheckedChange)="handleChangeOfModel($event)"
+  />
+  <p>
+    Le bouton suivant se situe dans le parent (son état dépend de la valeur
+    émise par l'enfant):
+  </p>
+  <button
+    mat-flat-button
+    color="{{ boolSignal() ? 'primary' : 'warn' }}"
+    (click)="changeBoolean()"
+  >
+    {{ boolSignal() }}
+  </button>
 </div>
 
 <!-- 4 (Effect) -->

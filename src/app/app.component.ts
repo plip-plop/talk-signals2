@@ -18,11 +18,11 @@ import { OutputComponent } from './components/output/output.component';
  * Constructor. Doit avoir une valeur initiale (possiblement null/undefined).
  * Renvoie un Signal est de type "WritableSignal".
  * Il peut être modifié grâce à 2 méthodes: "set()" et "update()".
- * 
+ *
  * computed():
  * Signal dérivé d'autres Signals.
  * Renvoie un Signal est de type "Signal". Il ne peut pas être modifié.
- * 
+ *
  * Tous les Signals sont typables.
  */
 @Component({
@@ -43,9 +43,7 @@ export class AppComponent {
   monSignal: WritableSignal<number> = signal<number>(0);
   boolSignal: WritableSignal<boolean> = signal<boolean>(true);
 
-  monComputedSignal: Signal<number> = computed(() =>
-    this.monSignal() * 10
-  );
+  monComputedSignal: Signal<number> = computed(() => this.monSignal() * 10);
 
   setSignal() {
     this.monSignal.set(0);
@@ -64,6 +62,10 @@ export class AppComponent {
     console.log(`model() - Le parent reçoit comme valeur: ${value}`);
   }
 
+  changeBoolean() {
+    this.boolSignal.update((value) => !value);
+  }
+
   computedCantChange() {
     // this.monComputedSignal.set(0);
     // this.monComputedSignal.update((value) => value + 1);
@@ -73,7 +75,7 @@ export class AppComponent {
    * CONCEPT :
    * Init (WritableSignal VS Signal).
    * set()/update()/computed()
-   * 
+   *
    * 1 - Input.
    * 2 - Output.
    * 3 - Model.
